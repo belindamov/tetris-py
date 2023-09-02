@@ -48,3 +48,11 @@ class Game:
                 return False
         return True
 
+    def rotate(self):
+        self.current_block.rotate()
+        if not self.block_in_border():
+            # attempt to move tetromino left
+            self.move_left()
+            if not self.block_in_border():
+                # attempt to move tetromino right
+                self.move_right()

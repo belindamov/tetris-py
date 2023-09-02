@@ -1,6 +1,7 @@
 from colours import *
 import pygame
 from position import *
+from game import *
 
 
 class Block:
@@ -31,3 +32,9 @@ class Block:
             new_position = Position(position.row + self.row_offset, position.col + self.col_offset)
             moved_tiles.append(new_position)
         return moved_tiles
+
+    def rotate(self):
+        self.rotation_state += 1
+        # ensure rotation state does not go past 3
+        if self.rotation_state == 4:
+            self.rotation_state = 0

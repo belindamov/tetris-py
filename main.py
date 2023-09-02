@@ -24,6 +24,8 @@ while True:
                 game.move_right()
             elif event.key == pygame.K_DOWN:
                 game.move_down()
+            elif event.key == pygame.K_UP:
+                game.rotate()
 
     # fill in background with white, then draw the grid and current block on top of it
     screen.fill(background)
