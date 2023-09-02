@@ -7,7 +7,7 @@ class LBlock(Block):
         super().__init__(block_type=1)
         # 0 is no rotation; increment of 1 means 90-degree rotation from the previous rotation state
         self.cells = {
-            0: [Position(0, 2), Position(1, 0), Position(1, 1), Position(1, 2)],
+            0: [Position(1, 0), Position(1, 1), Position(1, 2), Position(0, 2)],
             1: [Position(0, 1), Position(1, 1), Position(2, 1), Position(2, 2)],
             2: [Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 0)],
             3: [Position(0, 0), Position(0, 1), Position(1, 1), Position(2, 1)]
@@ -64,7 +64,7 @@ class TBlock(Block):
     def __init__(self):
         super().__init__(block_type=6)
         self.cells = {
-            0: [Position(0, 1), Position(1, 0), Position(1, 1), Position(1, 2)],
+            0: [Position(1, 0), Position(1, 1), Position(1, 2), Position(0, 1)],
             1: [Position(0, 1), Position(1, 1), Position(1, 2), Position(2, 1)],
             2: [Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 1)],
             3: [Position(0, 1), Position(1, 0), Position(1, 1), Position(2, 1)]

@@ -1,4 +1,5 @@
 from grid import *
+from block import *
 from blocks import *
 import random
 
@@ -25,12 +26,25 @@ class Game:
 
     def move_left(self):
         self.current_block.move(0, -1)
+        if not self.block_in_border():
+            self.current_block.move(0, 1)
 
     def move_right(self):
         self.current_block.move(0, 1)
+        if not self.block_in_border():
+            self.current_block.move(0, -1)
 
     def move_down(self):
         # positive row increment means down
         self.current_block.move(1, 0)
+        if not self.block_in_border():
+            self.current_block.move(-1, 0)
 
+    def block_in_border(self):
+        tiles = self.current_block.get_cell_positions()
+        # if any position has a tile out of the border, return False
+        for tile in tiles:
+            if not self.grid.inside_border(tile.row, tile.col):
+                return False
+        return True
 

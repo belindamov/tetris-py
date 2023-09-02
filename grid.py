@@ -22,3 +22,8 @@ class Grid:
                 cell_value = self.grid[i][j]
                 cell_rect = pygame.Rect(j*self.cell_size + 1, i*self.cell_size + 1, self.cell_size - 1, self.cell_size - 1)
                 pygame.draw.rect(screen, self.colours[cell_value], cell_rect)
+
+    def inside_border(self, row, col):
+        if (0 <= row < self.num_rows) and (0 <= col < self.num_cols):
+            return True
+        return False
