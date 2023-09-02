@@ -23,16 +23,16 @@ while True:
             sys.exit()
         # down, left, right, and rotate controls
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_LEFT and not game.game_over:
                 game.move_left()
-            elif event.key == pygame.K_RIGHT:
+            elif event.key == pygame.K_RIGHT and not game.game_over:
                 game.move_right()
-            elif event.key == pygame.K_DOWN:
+            elif event.key == pygame.K_DOWN and not game.game_over:
                 game.move_down()
-            elif event.key == pygame.K_UP:
+            elif event.key == pygame.K_UP and not game.game_over:
                 game.rotate()
         # automatic tetromino moving down
-        if event.type == game_update:
+        if event.type == game_update and not game.game_over:
             game.move_down()
 
     # fill in background with white, then draw the grid and current block on top of it
