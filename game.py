@@ -1,3 +1,5 @@
+import pygame.time
+
 from grid import *
 from block import *
 from blocks import *
@@ -11,8 +13,8 @@ class Game:
         self.current_block = self.get_random_block()
         self.next_block = self.get_random_block()
         self.game_over = False
-        self.lock_timer = None
-        self.lock_delay = 500
+        self.start_time = 0
+        self.score = 0
 
     def get_random_block(self):
         # if list is empty, replace it
@@ -25,7 +27,14 @@ class Game:
 
     def draw(self, screen):
         self.grid.draw(screen)
-        self.current_block.draw(screen)
+        self.current_block.draw(screen, 11, 11)
+
+        if self.next_block.type == 3:
+            self.next_block.draw(screen, 255, 290)
+        elif self.next_block.type == 4:
+            self.next_block.draw(screen, 255, 280)
+        else:
+            self.next_block.draw(screen, 270, 270)
 
     def move_left(self):
         self.current_block.move(0, -1)
@@ -42,7 +51,9 @@ class Game:
         self.current_block.move(1, 0)
         if not self.block_in_border() or not self.block_fits():
             self.current_block.move(-1, 0)
-            self.lock_in_place()
+            if pygame.time.get_ticks() - self.start_time >= 2500:
+                self.lock_in_place()
+                self.update_score(0, 1)
 
     def rotate(self):
         self.current_block.rotate()
@@ -59,7 +70,10 @@ class Game:
     def spacebar_auto_place(self):
         current_block = self.current_block
         while self.block_in_border() and self.block_fits() and current_block == self.current_block:
-            self.move_down()
+            self.current_block.move(1, 0)
+            if not self.block_in_border() or not self.block_fits():
+                self.current_block.move(-1, 0)
+                self.lock_in_place()
 
     def block_in_border(self):
         tiles = self.current_block.get_cell_positions()
@@ -70,12 +84,14 @@ class Game:
         return True
 
     def lock_in_place(self):
+        self.start_time = pygame.time.get_ticks()
         tiles = self.current_block.get_cell_positions()
         for position in tiles:
             self.grid.grid[position.row][position.col] = self.current_block.type
         self.current_block = self.next_block
         self.next_block = self.get_random_block()
-        self.grid.clear_full_rows()
+        rows_cleared = self.grid.clear_full_rows()
+        self.update_score(rows_cleared, 0)
         if not self.block_fits():
             self.game_over = True
 
@@ -91,3 +107,15 @@ class Game:
         self.blocks = [LBlock(), JBlock(), IBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
         self.current_block = self.get_random_block()
         self.next_block = self.get_random_block()
+        self.score = 0
+
+    def update_score(self, lines_cleared, moved_down):
+        if lines_cleared == 1:
+            self.score += 100
+        elif lines_cleared == 2:
+            self.score += 300
+        elif lines_cleared == 3:
+            self.score += 500
+        elif lines_cleared == 4:
+            self.score += 800
+        self.score += moved_down

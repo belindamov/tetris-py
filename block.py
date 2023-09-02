@@ -14,11 +14,11 @@ class Block:
         self.row_offset = 0
         self.col_offset = 0
 
-    def draw(self, screen):
+    def draw(self, screen, x_offset, y_offset):
         tiles = self.get_cell_positions()
         for tile in tiles:
-            tile_rect = pygame.Rect(tile.col * self.cell_size + 1, tile.row * self.cell_size + 1, self.cell_size - 1,
-                                    self.cell_size - 1)
+            tile_rect = pygame.Rect(x_offset + tile.col * self.cell_size, y_offset + tile.row * self.cell_size,
+                                    self.cell_size - 1, self.cell_size - 1)
             pygame.draw.rect(screen, self.colours[self.type], tile_rect)
 
     def move(self, rows, cols):
