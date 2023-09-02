@@ -11,12 +11,17 @@ clock = pygame.time.Clock()
 
 game = Game()
 
+# increase timer by 200 ms with every user event
+game_update = pygame.USEREVENT
+pygame.time.set_timer(game_update, 200)
+
 # game loop
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        # down, left, right, and rotate controls
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 game.move_left()
@@ -26,6 +31,9 @@ while True:
                 game.move_down()
             elif event.key == pygame.K_UP:
                 game.rotate()
+        # automatic tetromino moving down
+        if event.type == game_update:
+            game.move_down()
 
     # fill in background with white, then draw the grid and current block on top of it
     screen.fill(background)

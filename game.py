@@ -39,6 +39,7 @@ class Game:
         self.current_block.move(1, 0)
         if not self.block_in_border():
             self.current_block.move(-1, 0)
+            self.lock_in_place()
 
     def block_in_border(self):
         tiles = self.current_block.get_cell_positions()
@@ -56,3 +57,10 @@ class Game:
             if not self.block_in_border():
                 # attempt to move tetromino right
                 self.move_right()
+
+    def lock_in_place(self):
+        tiles = self.current_block.get_cell_positions()
+        for position in tiles:
+            self.grid.grid[position.row][position.col] = self.current_block.type
+        self.current_block = self.next_block
+        self.next_block = self.get_random_block()
