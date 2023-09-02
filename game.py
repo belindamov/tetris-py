@@ -26,19 +26,20 @@ class Game:
 
     def move_left(self):
         self.current_block.move(0, -1)
-        if not self.block_in_border():
+        if not self.block_in_border() or not self.block_fits():
             self.current_block.move(0, 1)
 
     def move_right(self):
         self.current_block.move(0, 1)
-        if not self.block_in_border():
+        if not self.block_in_border() or not self.block_fits():
             self.current_block.move(0, -1)
 
     def move_down(self):
         # positive row increment means down
         self.current_block.move(1, 0)
-        if not self.block_in_border():
+        if not self.block_in_border() or not self.block_fits():
             self.current_block.move(-1, 0)
+            pygame.time.delay(400)
             self.lock_in_place()
 
     def block_in_border(self):
@@ -51,7 +52,7 @@ class Game:
 
     def rotate(self):
         self.current_block.rotate()
-        if not self.block_in_border():
+        if not self.block_in_border() or not self.block_fits():
             # attempt to move tetromino left
             self.move_left()
             if not self.block_in_border():
@@ -64,3 +65,10 @@ class Game:
             self.grid.grid[position.row][position.col] = self.current_block.type
         self.current_block = self.next_block
         self.next_block = self.get_random_block()
+
+    def block_fits(self):
+        tiles = self.current_block.get_cell_positions()
+        for tile in tiles:
+            if not self.grid.is_empty(tile.row, tile.col):
+                return False
+        return True

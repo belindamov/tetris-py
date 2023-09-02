@@ -35,6 +35,6 @@ class Block:
 
     def rotate(self):
         self.rotation_state += 1
-        # ensure rotation state does not go past 3
-        if self.rotation_state == 4:
+        # ensure rotation state does not go past the max amount of rotations
+        if self.rotation_state == len(self.cells):
             self.rotation_state = 0
