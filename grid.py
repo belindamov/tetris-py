@@ -59,4 +59,7 @@ class Grid:
                 self.move_row_down(i, filled)
         return filled
 
-
+    def reset(self):
+        for i in range(self.num_rows):
+            for j in range(self.num_cols):
+                self.grid[i][j] = 0

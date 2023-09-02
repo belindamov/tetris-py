@@ -79,3 +79,9 @@ class Game:
             if not self.grid.is_empty(tile.row, tile.col):
                 return False
         return True
+
+    def reset(self):
+        self.grid.reset()
+        self.blocks = [LBlock(), JBlock(), IBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
+        self.current_block = self.get_random_block()
+        self.next_block = self.get_random_block()
