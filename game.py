@@ -11,6 +11,8 @@ class Game:
         self.current_block = self.get_random_block()
         self.next_block = self.get_random_block()
         self.game_over = False
+        self.lock_timer = None
+        self.lock_delay = 500
 
     def get_random_block(self):
         # if list is empty, replace it
@@ -42,14 +44,6 @@ class Game:
             self.current_block.move(-1, 0)
             self.lock_in_place()
 
-    def block_in_border(self):
-        tiles = self.current_block.get_cell_positions()
-        # if any position has a tile out of the border, return False
-        for tile in tiles:
-            if not self.grid.inside_border(tile.row, tile.col):
-                return False
-        return True
-
     def rotate(self):
         self.current_block.rotate()
         if not self.block_in_border() or not self.block_fits():
@@ -62,8 +56,20 @@ class Game:
                     # attempt to move tetromino up
                     self.current_block.move(-1, 0)
 
+    def spacebar_auto_place(self):
+        current_block = self.current_block
+        while self.block_in_border() and self.block_fits() and current_block == self.current_block:
+            self.move_down()
+
+    def block_in_border(self):
+        tiles = self.current_block.get_cell_positions()
+        # if any position has a tile out of the border, return False
+        for tile in tiles:
+            if not self.grid.inside_border(tile.row, tile.col):
+                return False
+        return True
+
     def lock_in_place(self):
-        pygame.time.delay(400)
         tiles = self.current_block.get_cell_positions()
         for position in tiles:
             self.grid.grid[position.row][position.col] = self.current_block.type

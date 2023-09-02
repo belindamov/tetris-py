@@ -16,8 +16,8 @@ game_update = pygame.USEREVENT
 pygame.time.set_timer(game_update, 200)
 
 # delays in ms when you hold down the keys
-key_repeat_delay = 200
-key_repeat_interval = 100
+key_repeat_delay = 100
+key_repeat_interval = 125
 
 key_timers = {
     pygame.K_LEFT: 0,
@@ -37,6 +37,8 @@ while True:
             if game.game_over:
                 game.game_over = False
                 game.reset()
+            if event.key == pygame.K_SPACE:
+                game.spacebar_auto_place()
         # automatic tetromino moving down
         if event.type == game_update and not game.game_over:
             game.move_down()
@@ -65,4 +67,4 @@ while True:
     game.draw(screen)
     pygame.display.update()
     # 60 fps
-    clock.tick(200)
+    clock.tick(60)
