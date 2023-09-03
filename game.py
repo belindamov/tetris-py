@@ -1,5 +1,6 @@
 import pygame.time
 
+from block import Block
 from grid import *
 from block import *
 from blocks import *
@@ -25,9 +26,22 @@ class Game:
         self.blocks.remove(block)
         return block
 
+    # def calculate_shadow_offset(self):
+    #     copy = Block(self.current_block.type)
+    #     copy.cells = self.current_block.get_cell_positions()
+    #     copy.row_offset = 580
+    #     tiles = copy.get_cell_positions()
+    #     for tile in tiles:
+    #         if not self.grid.is_empty(tile.row, tile.col):
+    #             copy.row_offset -= 30
+    #     return copy.row_offset
+
     def draw(self, screen):
         self.grid.draw(screen)
         self.current_block.draw(screen, 11, 11)
+
+        # 580 bottom, -30 up each row
+        # self.current_block.draw_outline(screen, 11)
 
         if self.next_block.type == 3:
             self.next_block.draw(screen, 255, 290)

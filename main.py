@@ -54,10 +54,10 @@ while True:
                     game.game_over = False
                     game.reset()
             # if space is pressed, automatically place the block
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_SPACE and not game.game_over:
                 game.spacebar_auto_place()
                 game.update_score(0, 2)
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_UP and not game.game_over:
                 game.rotate()
         # automatic tetromino moving down
         if event.type == game_update and not game.game_over:

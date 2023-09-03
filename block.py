@@ -1,11 +1,15 @@
+import self as self
+
 from colours import *
 import pygame
 from position import *
 from game import *
+from grid import *
 
 
 class Block:
     def __init__(self, block_type):
+        self.grid = Grid()
         self.type = block_type
         self.cells = {}
         self.cell_size = 30

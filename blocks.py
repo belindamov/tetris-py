@@ -1,4 +1,5 @@
 from block import *
+from block import Block
 from position import *
 
 
