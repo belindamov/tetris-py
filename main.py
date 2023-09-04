@@ -13,11 +13,11 @@ small_font = pygame.font.Font(None, 30)
 
 # create surface and rect for showing the score
 score_surface = title_font.render("Score", True, Colours.white)
-score_rect = pygame.Rect(320, 55, 170, 60)
+score_rect = pygame.Rect(450, 55, 170, 60)
 
 # create surface and rect for showing the next tetromino
 next_block_surface = title_font.render("Next", True, Colours.white)
-next_block_rect = pygame.Rect(320, 215, 170, 180)
+next_block_rect = pygame.Rect(450, 150, 170, 460)
 
 # create surfaces and rects for game over screen
 game_over_surface = title_font.render("GAME OVER", True, Colours.white)
@@ -25,7 +25,7 @@ game_over_outline = title_font.render("GAME OVER", True, Colours.black)
 game_over_surface2 = small_font.render("Press ENTER", True, Colours.white)
 game_over_outline2 = small_font.render("Press ENTER", True, Colours.black)
 
-screen = pygame.display.set_mode((500, 620))
+screen = pygame.display.set_mode((630, 620))
 pygame.display.set_caption("Tetris (Python)")
 clock = pygame.time.Clock()
 
@@ -36,7 +36,7 @@ game_update = pygame.USEREVENT
 pygame.time.set_timer(game_update, 200)
 
 # delays in ms when you hold down the keys
-key_repeat_delay = 60
+key_repeat_delay = 65
 key_repeat_interval = 65
 
 key_timers = {
@@ -57,12 +57,15 @@ while True:
                 if event.key == pygame.K_RETURN:
                     game.game_over = False
                     game.reset()
-            # if space is pressed, automatically place the block
-            if event.key == pygame.K_SPACE and not game.game_over:
-                game.spacebar_auto_place()
-                game.update_score(0, 2)
-            if event.key == pygame.K_UP and not game.game_over:
-                game.rotate_both()
+            else:
+                # if space is pressed, automatically place the block
+                if event.key == pygame.K_SPACE:
+                    game.spacebar_auto_place()
+                    game.update_score(0, 2)
+                if event.key == pygame.K_UP:
+                    game.rotate_both()
+                if event.key == pygame.K_c:
+                    game.hold_block()
         # automatic tetromino moving down
         if event.type == game_update and not game.game_over:
             game.move_down()
@@ -88,15 +91,15 @@ while True:
     score_num_surface = title_font.render(str(game.score), True, Colours.white)
     # fill in background with white, then draw the grid and current block on top of it
     screen.fill(background)
-    screen.blit(score_surface, (365, 20, 50, 50))
-    screen.blit(next_block_surface, (375, 180, 50, 50))
+    screen.blit(score_surface, (495, 20, 50, 50))
+    # screen.blit(next_block_surface, (505, 180, 50, 50))
 
     # draw the rectangle for the score
     pygame.draw.rect(screen, Colours.grey_pink, score_rect, 0, 10)
     # display the score
     screen.blit(score_num_surface, score_num_surface.get_rect(centerx=score_rect.centerx, centery=score_rect.centery))
     # draw the rectangle that displays the next tetromino
-    pygame.draw.rect(screen, Colours.grey_pink, next_block_rect, 0, 10)
+    # pygame.draw.rect(screen, Colours.grey_pink, next_block_rect, 0, 10)
     game.draw(screen)
 
     if game.game_over:
@@ -104,11 +107,11 @@ while True:
         for dx in [-1, 0, 1]:
             for dy in [-1, 0, 1]:
                 if dx != 0 or dy != 0:
-                    screen.blit(game_over_outline, (77 - dx, 260 - dy))
-                    screen.blit(game_over_outline2, (100 - dx, 300 - dy))
+                    screen.blit(game_over_outline, (207 - dx, 260 - dy))
+                    screen.blit(game_over_outline2, (230 - dx, 300 - dy))
         # display the game over text
-        screen.blit(game_over_surface, (77, 260))
-        screen.blit(game_over_surface2, (100, 300))
+        screen.blit(game_over_surface, (207, 260))
+        screen.blit(game_over_surface2, (230, 300))
 
     pygame.display.update()
     # 60 fps
