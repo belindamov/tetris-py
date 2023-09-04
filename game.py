@@ -237,4 +237,5 @@ class Game:
                 self.current_block.row_offset = -1
             self.copy = self.make_copy()
             self.block_held = og_current
+            self.block_held.rotation_state = 0
 
