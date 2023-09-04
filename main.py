@@ -111,5 +111,5 @@ while True:
         screen.blit(game_over_surface2, (100, 300))
 
     pygame.display.update()
-    # 30 fps
+    # 60 fps
     clock.tick(60)

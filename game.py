@@ -71,12 +71,12 @@ class Game:
 
     def move_copy_left(self):
         self.copy.move(0, -1)
-        if not self.block_in_border(False) or not self.block_fits():
+        if not self.block_in_border(False) or (not self.block_fits() and not self.block_fits(False)):
             self.copy.move(0, 1)
 
     def move_copy_right(self):
         self.copy.move(0, 1)
-        if not self.block_in_border(False) or not self.block_fits():
+        if not self.block_in_border(False) or (not self.block_fits() and not self.block_fits(False)):
             self.copy.move(0, -1)
 
     def move_copy_outline(self):
@@ -171,6 +171,7 @@ class Game:
         self.grid.reset()
         self.blocks = [LBlock(), JBlock(), IBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
         self.current_block = self.get_random_block()
+        self.copy = self.make_copy()
         self.next_block = self.get_random_block()
         self.score = 0
 
