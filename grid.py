@@ -14,7 +14,6 @@ class Grid:
         for i in range(self.num_rows):
             for j in range(self.num_cols):
                 print(self.grid[i][j], end=" ")
-            print()
 
     def draw(self, screen):
         for i in range(self.num_rows):
@@ -25,20 +24,13 @@ class Grid:
                 pygame.draw.rect(screen, self.colours[cell_value], cell_rect)
 
     def inside_border(self, row, col):
-        if (0 <= row < self.num_rows) and (0 <= col < self.num_cols):
-            return True
-        return False
+        return 0 <= row < self.num_rows and 0 <= col < self.num_cols
 
     def is_empty(self, row, col):
-        if self.grid[row][col] == 0:
-            return True
-        return False
+        return self.grid[row][col] == 0 or self.grid[row][col] == 8
 
     def is_row_full(self, row):
-        for j in range(self.num_cols):
-            if self.grid[row][j] == 0:
-                return False
-        return True
+        return all(cell != 0 for cell in self.grid[row])
 
     def clear_row(self, row):
         for j in range(self.num_cols):

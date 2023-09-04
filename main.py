@@ -1,23 +1,27 @@
 import pygame
 import sys
-from game import *
+
 from colours import Colours
+from game import Game
 
 pygame.init()
 background = (20, 20, 20)
 
+# create fonts
 title_font = pygame.font.Font(None, 40)
 small_font = pygame.font.Font(None, 30)
 
+# create surface and rect for showing the score
 score_surface = title_font.render("Score", True, Colours.white)
 score_rect = pygame.Rect(320, 55, 170, 60)
 
+# create surface and rect for showing the next tetromino
 next_block_surface = title_font.render("Next", True, Colours.white)
 next_block_rect = pygame.Rect(320, 215, 170, 180)
 
+# create surfaces and rects for game over screen
 game_over_surface = title_font.render("GAME OVER", True, Colours.white)
 game_over_outline = title_font.render("GAME OVER", True, Colours.black)
-
 game_over_surface2 = small_font.render("Press ENTER", True, Colours.white)
 game_over_outline2 = small_font.render("Press ENTER", True, Colours.black)
 
@@ -58,7 +62,7 @@ while True:
                 game.spacebar_auto_place()
                 game.update_score(0, 2)
             if event.key == pygame.K_UP and not game.game_over:
-                game.rotate()
+                game.rotate_both()
         # automatic tetromino moving down
         if event.type == game_update and not game.game_over:
             game.move_down()
@@ -72,9 +76,9 @@ while True:
                 if current_time - key_timers[key] > key_repeat_interval:
                     key_timers[key] = current_time
                     if key == pygame.K_LEFT:
-                        game.move_left()
+                        game.move_both_left()
                     elif key == pygame.K_RIGHT:
-                        game.move_right()
+                        game.move_both_right()
                     elif key == pygame.K_DOWN:
                         game.move_down()
         else:
@@ -107,5 +111,5 @@ while True:
         screen.blit(game_over_surface2, (100, 300))
 
     pygame.display.update()
-    # 60 fps
+    # 30 fps
     clock.tick(60)
