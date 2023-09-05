@@ -49,13 +49,19 @@ class Game:
         x_pos3 = 385 if self.next_next_next_block.type in (3, 4) else 400
         x_pos4 = 385 if self.next_next_next_next_block.type in (3, 4) else 400
 
-        y_pos1 = 200 if self.next_block.type == 3 else 185
-        y_pos2 = 290 if self.next_next_block.type == 3 else 275
-        y_pos3 = 380 if self.next_next_next_block.type == 3 else 365
-        y_pos4 = 470 if self.next_next_next_next_block.type == 3 else 455
+        y_pos1 = 190 if self.next_block.type == 3 else 185
+        y_pos2 = 260 if self.next_next_block.type == 3 else 275
+        y_pos3 = 350 if self.next_next_next_block.type == 3 else 365
+        y_pos4 = 430 if self.next_next_next_next_block.type == 3 else 455
 
         if self.block_held is not None:
-            x_pos5 = 12 if self.block_held.type == 3 else 20
+            # x_pos5 = 12 if self.block_held.type == 3 else 20
+            if self.block_held.type == 3:
+                x_pos5 = 12
+            elif self.block_held.type == 4:
+                x_pos5 = 38
+            else:
+                x_pos5 = 20
             y_pos5 = 23 if self.block_held.type == 3 else 26
             self.block_held.draw(screen, x_pos5, y_pos5)
 
