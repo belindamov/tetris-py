@@ -26,7 +26,7 @@ class Game:
         self.place_sound = pygame.mixer.Sound('sounds/placedown.mp3')
         self.place_sound.set_volume(3)
         # temporary
-        self.line_sound = pygame.mixer.Sound('sounds/line_clear.mp3')
+        self.line_sound = pygame.mixer.Sound('sounds/line_clear.ogg')
         self.line_sound.set_volume(3)
 
     def get_random_block(self):
