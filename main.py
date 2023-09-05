@@ -36,7 +36,7 @@ game_update = pygame.USEREVENT
 pygame.time.set_timer(game_update, 200)
 
 # delays in ms when you hold down the keys
-key_repeat_delay = 65
+key_repeat_delay = 70
 key_repeat_interval = 65
 
 key_timers = {

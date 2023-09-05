@@ -1,10 +1,8 @@
-import pygame.time
-
+import pygame
 from block import Block
-from blocks import SBlock
-from copyblocks import *
-from grid import *
-from blocks import *
+from blocks import LBlock, JBlock, IBlock, OBlock, SBlock, TBlock, ZBlock
+from copyblocks import CLBlock, CJBlock, CIBlock, COBlock, CSBlock, CTBlock, CZBlock
+from grid import Grid
 import random
 
 
@@ -22,6 +20,14 @@ class Game:
         self.start_time = 0
         self.score = 0
         self.block_held = None
+        self.theme_song = pygame.mixer.Sound('sounds/theme.ogg')
+        self.theme_song.set_volume(0.5)
+        self.theme_song.play(-1)
+        self.place_sound = pygame.mixer.Sound('sounds/placedown.mp3')
+        self.place_sound.set_volume(3)
+        # temporary
+        self.line_sound = pygame.mixer.Sound('sounds/line_clear.mp3')
+        self.line_sound.set_volume(3)
 
     def get_random_block(self):
         # if list is empty, replace it
@@ -190,9 +196,12 @@ class Game:
         self.next_next_next_next_block = self.get_random_block()
         # update score as needed if any rows are cleared
         rows_cleared = self.grid.clear_full_rows()
-        self.update_score(rows_cleared, 0)
+        if rows_cleared > 0:
+            self.line_sound.play()
+            self.update_score(rows_cleared, 0)
         if not self.block_fits():
             self.game_over = True
+        self.place_sound.play()
 
     def reset(self):
         self.grid.reset()
@@ -233,8 +242,6 @@ class Game:
             og_current = self.current_block
             self.current_block = og_held
             self.current_block.col_offset = 4 if self.current_block.type == 4 else 3
-            if self.current_block.type == 3:
-                self.current_block.row_offset = -1
             self.copy = self.make_copy()
             self.block_held = og_current
             self.block_held.rotation_state = 0
